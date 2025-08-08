@@ -13,13 +13,6 @@ plugins {
 group = "com.extractor.api"
 version = "1.0.0"
 
-// **CRITICAL FIX**: Add the repositories block.
-// This tells Gradle where to download the dependencies from.
-repositories {
-    mavenCentral() // For Ktor, Logback, and other standard libraries.
-    maven { url = uri("https://jitpack.io") } // For nicehttp and other GitHub-hosted libraries.
-}
-
 application {
     mainClass.set("com.extractor.api.ApplicationKt")
 }
