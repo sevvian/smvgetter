@@ -5,7 +5,6 @@ val kotlin_version = "1.9.23" // Match the version from the plugins block
 
 plugins {
     kotlin("jvm") version "1.9.23"
-    // Updated Ktor plugin version to align with the new dependency version.
     id("io.ktor.plugin") version "2.3.11"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
     id("com.github.johnrengelman.shadow") version "8.1.1"
@@ -13,6 +12,13 @@ plugins {
 
 group = "com.extractor.api"
 version = "1.0.0"
+
+// **CRITICAL FIX**: Add the repositories block.
+// This tells Gradle where to download the dependencies from.
+repositories {
+    mavenCentral() // For Ktor, Logback, and other standard libraries.
+    maven { url = uri("https://jitpack.io") } // For nicehttp and other GitHub-hosted libraries.
+}
 
 application {
     mainClass.set("com.extractor.api.ApplicationKt")
@@ -48,7 +54,6 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
     // Dependencies required by the Cloudstream extractor source code
-    // Corrected: Using a newer, public version of nicehttp to resolve the 401 Unauthorized error.
     implementation("com.github.Lagradost:nicehttp:1.1.7")
     implementation("org.jsoup:jsoup:1.17.2")
 
