@@ -2,9 +2,10 @@ package com.lagradost.cloudstream3.extractors
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.ExtractorLink
+import com.lagradost.cloudstream3.Qualities
+import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.CryptoAES
 import kotlinx.serialization.Serializable
@@ -19,7 +20,7 @@ class MyCloud : ExtractorApi(
     override suspend fun getUrl(
         url: String,
         referer: String?,
-        subtitleCallback: (com.lagradost.cloudstream3.SubtitleFile) -> Unit,
+        subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
         val futoken = app.get("https://mycloud.to/futoken", referer = referer).text

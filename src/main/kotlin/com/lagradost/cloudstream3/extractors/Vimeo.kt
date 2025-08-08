@@ -2,8 +2,9 @@ package com.lagradost.cloudstream3.extractors
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.ExtractorLink
+import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.getQualityFromName
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import kotlinx.serialization.Serializable
@@ -12,7 +13,7 @@ class Vimeo : ExtractorApi("Vimeo", "https://vimeo.com", requiresReferer = false
     override suspend fun getUrl(
         url: String,
         referer: String?,
-        subtitleCallback: (com.lagradost.cloudstream3.SubtitleFile) -> Unit,
+        subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
         val id = url.substringAfterLast("/")
