@@ -23,9 +23,9 @@ repositories {
     maven { url = uri("https://jitpack.io") }
 }
 
-// Configure the shadowJar task by its name and type. This is the robust, idiomatic
-// way to handle task configuration in the Gradle Kotlin DSL, avoiding classpath issues.
-tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJarTask>("shadowJar") {
+// Configure the shadowJar task using the CORRECT class name: ShadowJar.
+// This was the root cause of the previous build failures.
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     archiveBaseName.set("app")
     archiveClassifier.set("")
     archiveVersion.set("")
