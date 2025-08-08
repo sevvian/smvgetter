@@ -9,9 +9,9 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 object ExtractorLogic {
     private const val TAG = "ExtractorLogic"
 
-    // By creating a comprehensive list, we can support a wide range of sources.
-    // Adding a new extractor is as simple as adding its class to this list.
+    // A comprehensive list of all viable, ported extractors.
     private val extractors: List<ExtractorApi> = listOf(
+        // Standard hosts
         DoodStream(),
         Streamtape(),
         Streamwish(),
@@ -23,8 +23,27 @@ object ExtractorLogic {
         StreamLare(),
         Vidoza(),
         Mp4upload(),
-        Streamzz()
-        // More can be added here as they are ported.
+        Streamzz(),
+        Aparat(),
+        Archive(),
+        Clipwatching(),
+        DailyMotion(),
+        Evoload(),
+        Fembed(),
+        FileLions(),
+        Gofile(),
+        GoogleDrive(),
+        Highstream(),
+        Mediafire(),
+        Megacloud(),
+        OkRu(),
+        Streamhub(),
+        Uqload(),
+        Vidmoly(),
+        Vimeo(),
+        Yourupload()
+        // Clones and variants are often covered by the main extractors.
+        // Excluded: YouTube (requires external library), WebView-based extractors.
     )
 
     suspend fun extract(url: String): List<ExtractorLink> {
