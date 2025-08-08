@@ -41,13 +41,15 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-status-pages-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-http-content:$ktor_version")
+    // FIX: Corrected artifact name from ktor-server-http-content to ktor-server-http-content-jvm
+    implementation("io.ktor:ktor-server-http-content-jvm:$ktor_version")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
     // Dependencies required by the Cloudstream extractor source code
-    implementation("com.github.Lagradost:nicehttp:1.1.7")
+    // FIX: Updated to latest patch version to try and bypass JitPack 401 error.
+    implementation("com.github.Lagradost:nicehttp:1.1.8")
     implementation("org.jsoup:jsoup:1.17.2")
 
     // Reflection library used by ExtractorLogic to discover extractors at runtime.
