@@ -1,8 +1,14 @@
+// Define versions in one place for maintainability.
+// The kotlin_version is now explicitly defined to match the plugin version.
+val ktor_version: String by project
+val logback_version: String by project
+val kotlin_version = "1.9.23" // Match the version from the plugins block
+
 plugins {
     kotlin("jvm") version "1.9.23"
     id("io.ktor.plugin") version "2.3.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    kotlin("plugin.serialization") version "1.9.23"
 }
 
 group = "com.extractor.api"
@@ -14,52 +20,41 @@ application {
 
 repositories {
     mavenCentral()
+    // JitPack is required for some of Cloudstream's dependencies.
+    maven { url = uri("https://jitpack.io") }
 }
 
-// Include the Cloudstream source code from the submodule in our build
-sourceSets.main {
-    java.srcDirs("cloudstream/app/src/main/java")
-}
-
-dependencies {
-    // Ktor Server
-    implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
-    implementation("io.ktor:ktor-server-http-redirect-jvm")
-    implementation("io.ktor:ktor-server-host-common-jvm")
-    implementation("io.ktor:ktor-server-auto-head-response-jvm")
-    implementation("io.ktor:ktor-server-caching-headers-jvm")
-    implementation("io.ktor:ktor-server-cors-jvm")
-    implementation("io.ktor:ktor-server-default-headers-jvm")
-    implementation("io.ktor:ktor-server-status-pages-jvm")
-    implementation("io.ktor:ktor-server-call-logging-jvm")
-    implementation("io.ktor:ktor-server-static-jvm")
-
-
-    // Logging
-    implementation("ch.qos.logback:logback-classic:1.5.6")
-
-    // Cloudstream Dependencies (must match what extractors use)
-    implementation("org.jsoup:jsoup:1.17.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.1")
-    implementation("com.lagradost:nicehttp:1.1.2")
-
-    // GraalVM JavaScript Engine for JS-based extractors
-    implementation("org.graalvm.js:js:23.1.2")
-    implementation("org.graalvm.js:js-scriptengine:23.1.2")
-
-    // Reflection library for dynamic extractor discovery
-    implementation("org.reflections:reflections:0.10.2")
-
-    // Testing
-    testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-}
-
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+// Configure the shadowJar task to create an executable "fat" JAR.
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJarTask> {
     archiveBaseName.set("app")
     archiveClassifier.set("")
     archiveVersion.set("")
+    // This is critical for the 'reflections' library to work correctly in the fat JAR.
+    // It merges service descriptor files instead of overwriting them.
+    mergeServiceFiles()
+}
+
+dependencies {
+    // Ktor Framework
+    implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-http-content:$ktor_version") // Required for serving static files
+
+    // Logging
+    implementation("ch.qos.logback:logback-classic:$logback_version")
+
+    // Cloudstream Submodule Dependency
+    implementation(project(":cloudstream:app"))
+
+    // Reflection library used by ExtractorLogic to discover extractors at runtime.
+    implementation("org.reflections:reflections:0.10.2")
+
+    // Testing Dependencies
+    testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
+    // Use the explicitly defined kotlin_version for the test dependency.
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
