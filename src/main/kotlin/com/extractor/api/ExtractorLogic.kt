@@ -41,7 +41,11 @@ object ExtractorLogic {
         Uqload(),
         Vidmoly(),
         Vimeo(),
-        Yourupload()
+        Yourupload(),
+        StreamSB(),
+        Netu(),
+        Sendvid(),
+        WcoStream()
         // Clones and variants are often covered by the main extractors.
         // Excluded: YouTube (requires external library), WebView-based extractors.
     )
