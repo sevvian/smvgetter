@@ -17,14 +17,9 @@ application {
     mainClass.set("com.extractor.api.ApplicationKt")
 }
 
-repositories {
-    mavenCentral()
-    // JitPack is required for some of Cloudstream's dependencies.
-    maven { url = uri("https://jitpack.io") }
-}
+// The repositories block has been moved to settings.gradle.kts to centralize configuration.
 
-// Configure the shadowJar task using the CORRECT class name: ShadowJar.
-// This was the root cause of the previous build failures.
+// Configure the shadowJar task using the correct class name.
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     archiveBaseName.set("app")
     archiveClassifier.set("")
