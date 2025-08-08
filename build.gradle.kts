@@ -29,7 +29,8 @@ dependencies {
 
     // Cloudstream dependencies (as they are not on Maven Central)
     // These are needed for the extractor logic to compile.
-    implementation("com.github.recloudstream:nicehttp:2.0.3")
+    // Switched to the original lagradost repo to fix 401 Unauthorized from JitPack
+    implementation("com.github.lagradost:nicehttp:2.0.3")
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 
