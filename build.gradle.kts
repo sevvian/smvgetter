@@ -18,11 +18,7 @@ application {
     mainClass.set("com.extractor.api.ApplicationKt")
 }
 
-// Define the repositories where Gradle should look for dependencies.
-repositories {
-    mavenCentral()
-    maven { url = uri("https://jitpack.io") } // Jitpack is needed for Cloudstream
-}
+// Repositories are now defined in settings.gradle.kts as per modern Gradle practice.
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     archiveBaseName.set("app")
@@ -44,12 +40,10 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
     // == CLOUDSTREAM DEPENDENCIES ==
-    // We now pull the Cloudstream library and extractors as pre-compiled
-    // artifacts from Jitpack. This is much more stable than compiling from source.
-    // Using a specific commit hash for reproducibility.
-    val cloudstreamCommit = "d9131e29692a1809312a93433329a334a24765a4" 
-    implementation("com.github.recloudstream.cloudstream:library:$cloudstreamCommit")
-    implementation("com.github.recloudstream.cloudstream:repo:$cloudstreamCommit")
+    // Switched to a stable, tagged release from Jitpack for reliability.
+    val cloudstreamVersion = "v4.4.2" 
+    implementation("com.github.recloudstream.cloudstream:library:$cloudstreamVersion")
+    implementation("com.github.recloudstream.cloudstream:repo:$cloudstreamVersion")
 
     // Testing Dependencies
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")

@@ -1,10 +1,16 @@
-rootProject.name = "ktor-cloudstream-extractor"
-
-// Define where Gradle should look for all dependencies for the entire project.
-// This is the modern, centralized approach that Gradle requires.
-dependencyResolutionManagement {
+pluginManagement {
     repositories {
-        mavenCentral() // For Ktor, Logback, and other standard libraries.
-        maven { url = uri("https://jitpack.io") } // For nicehttp and other GitHub-hosted libraries.
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+
+rootProject.name = "smvgetter"
