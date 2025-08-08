@@ -1,5 +1,7 @@
+// Import the necessary class from the Shadow plugin to enable type-safe configuration.
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJarTask
+
 // Define versions in one place for maintainability.
-// The kotlin_version is now explicitly defined to match the plugin version.
 val ktor_version: String by project
 val logback_version: String by project
 val kotlin_version = "1.9.23" // Match the version from the plugins block
@@ -25,7 +27,8 @@ repositories {
 }
 
 // Configure the shadowJar task to create an executable "fat" JAR.
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJarTask> {
+// With the import, ShadowJarTask is now a resolved type.
+tasks.withType<ShadowJarTask> {
     archiveBaseName.set("app")
     archiveClassifier.set("")
     archiveVersion.set("")
