@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "smvgetter"
+rootProject.name = "ktor-cloudstream-extractor"
