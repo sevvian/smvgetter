@@ -6,7 +6,6 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.newExtractorLink
-import com.lagradost.cloudstream3.utils.CryptoAES
 import kotlinx.serialization.Serializable
 
 class Megacloud : ExtractorApi(
@@ -14,8 +13,6 @@ class Megacloud : ExtractorApi(
     "https://megacloud.tv",
     requiresReferer = true
 ) {
-    private val key = "4532167891234567" // Not from a public source, might need updates
-
     override suspend fun getUrl(
         url: String,
         referer: String?,

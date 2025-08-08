@@ -6,7 +6,6 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.newExtractorLink
-import com.lagradost.cloudstream3.base64Decode
 import com.lagradost.cloudstream3.utils.CryptoAES
 import kotlinx.serialization.Serializable
 
@@ -15,7 +14,7 @@ class MyCloud : ExtractorApi(
     "https://mycloud.to",
     requiresReferer = true
 ) {
-    private val key = "2574153857214863" // https://github.com/Ciarands/vidsrc-keys/blob/main/keys.json
+    private val key = "2574153857214863"
 
     override suspend fun getUrl(
         url: String,
@@ -27,24 +26,27 @@ class MyCloud : ExtractorApi(
         val id = url.substringAfterLast("/")
         val encodedUrl = encodeId(id, key)
         val realUrl = "https://mycloud.to/mediainfo/$encodedUrl?${futoken.replace("\"", "")}"
+        
         val response = app.get(realUrl, referer = url).parsed<MediaInfo>()
-        if (response.result is String) return
-        val result = app.get(response.result.sources.first().file, referer = url).text
-        val master = "#EXT-M3U8\\n#EXT-X-VERSION:3\\n".toRegex().replace(result, "")
-        val videoList = master.split("#EXT-X-STREAM-INF:").filter { it.contains("m3u8") }
-        videoList.forEach {
-            val quality = it.substringAfter("RESOLUTION=").substringAfter("x").substringBefore("\\n")
-            val link = it.substringAfter("\\n").substringBefore("\\n")
-            callback(
-                newExtractorLink(
-                    this.name,
-                    this.name,
-                    link,
-                    url,
-                    quality.toIntOrNull() ?: Qualities.Unknown,
-                    isM3u8 = true
+        
+        response.result?.sources?.firstOrNull()?.file?.let { fileUrl ->
+            val result = app.get(fileUrl, referer = url).text
+            val master = "#EXT-M3U8\\n#EXT-X-VERSION:3\\n".toRegex().replace(result, "")
+            val videoList = master.split("#EXT-X-STREAM-INF:").filter { it.contains("m3u8") }
+            videoList.forEach {
+                val quality = it.substringAfter("RESOLUTION=").substringAfter("x").substringBefore("\\n")
+                val link = it.substringAfter("\\n").substringBefore("\\n")
+                callback(
+                    newExtractorLink(
+                        this.name,
+                        this.name,
+                        link,
+                        url,
+                        quality.toIntOrNull() ?: Qualities.Unknown,
+                        isM3u8 = true
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -55,7 +57,7 @@ class MyCloud : ExtractorApi(
 
     @Serializable
     data class MediaInfo(
-        @JsonProperty("result") val result: Result
+        @JsonProperty("result") val result: Result? = null
     )
 
     @Serializable
