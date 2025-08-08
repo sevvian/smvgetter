@@ -27,10 +27,11 @@ dependencies {
     // Logging
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-    // Cloudstream dependencies (as they are not on Maven Central)
-    // These are needed for the extractor logic to compile.
-    // Switched to the original lagradost repo to fix 401 Unauthorized from JitPack
-    implementation("com.github.lagradost:nicehttp:2.0.3")
+    // Cloudstream dependencies
+    // Depend on the local submodule project instead of fetching from the internet
+    implementation(project(":Cloudstream"))
+
+    // Other required libraries that Cloudstream itself uses
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 
