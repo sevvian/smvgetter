@@ -15,7 +15,7 @@ class Vidplay : ExtractorApi(
     "https://vidplay.online",
     requiresReferer = true
 ) {
-    private val key = "2890516632534262"
+    private val key = "9201745688345162"
 
     override suspend fun getUrl(
         url: String,

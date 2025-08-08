@@ -16,14 +16,11 @@ class DoodStream : ExtractorApi("DoodStream", "https://dood.watch", requiresRefe
     ) {
         val newUrl = if (url.contains("/d/")) url.replace("/d/", "/e/") else url
         val response = app.get(newUrl, referer = referer).text
-        val doodUrl = Regex("""\$\.get\('(/pass_md5/.*?)'""").find(response)?.groupValues?.get(1)
-        val key = doodUrl?.let { app.get("https://dood.watch$it", referer = newUrl).text }
+        val doodUrl = Regex("""/pass_md5/[^']+'""").find(response)?.value?.trim('\'')
+        val key = doodUrl?.let { app.get("https://dood.watch$it", referer = newUrl).text } ?: return
         val quality = response.substringAfter("'/d/").substringBefore("',")
-        val realUrl = "$key${
-            (0..9).joinToString("") {
-                (('a'..'z') + ('A'..'Z') + ('0'..'9')).random().toString()
-            }
-        }?token=${doodUrl?.substringAfterLast("/")}"
+        val randomString = (0..9).joinToString("") { (('a'..'z') + ('A'..'Z') + ('0'..'9')).random().toString() }
+        val realUrl = "$key$randomString?token=${doodUrl.substringAfterLast("/")}&expiry=${System.currentTimeMillis()}"
         val headers = mapOf("Referer" to "https://dood.watch/")
         callback(
             newExtractorLink(

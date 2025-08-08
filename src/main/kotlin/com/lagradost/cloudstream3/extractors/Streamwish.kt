@@ -5,7 +5,7 @@ import com.lagradost.cloudstream3.ExtractorLink
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
 
-class Streamwish : ExtractorApi("Streamwish", "https://streamwish.to", requiresReferer = false) {
+class Streamwish : ExtractorApi("Streamwish", "https://streamwish.top", requiresReferer = false) {
     override suspend fun getUrl(
         url: String,
         referer: String?,

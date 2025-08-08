@@ -3,11 +3,9 @@ package com.lagradost.cloudstream3.extractors
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.ExtractorLink
 import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.JsUnpacker
-import com.lagradost.cloudstream3.utils.newExtractorLink
+import com.lagradost.cloudstream3.utils.*
 
-class Filemoon : ExtractorApi("Filemoon", "https://filemoon.sx", requiresReferer = true) {
+class Vudeo : ExtractorApi("Vudeo", "https://vudeo.io", requiresReferer = true) {
     override suspend fun getUrl(
         url: String,
         referer: String?,
@@ -15,10 +13,10 @@ class Filemoon : ExtractorApi("Filemoon", "https://filemoon.sx", requiresReferer
         callback: (ExtractorLink) -> Unit
     ) {
         val response = app.get(url, referer = referer).text
-        val packed = Regex("""eval\(function\(p,a,c,k,e,d\)(.*)\)""").find(response)?.groupValues?.get(1)
+        val packed = Regex("""eval\((.*)\)""").find(response)?.groupValues?.get(1)
         if (packed != null) {
-            val unpacked = JsUnpacker("function(p,a,c,k,e,d)$packed").unpack()
-            val link = Regex("""file:\s*"(https://[^"]+master\.m3u8[^"]*)"""").find(unpacked ?: "")?.groupValues?.get(1)
+            val unpacked = JsUnpacker(packed).unpack()
+            val link = Regex("""sources:\s*\[\{file:"(.*?)"""").find(unpacked ?: "")?.groupValues?.get(1)
             if (link != null) {
                 callback(
                     newExtractorLink(
@@ -26,8 +24,8 @@ class Filemoon : ExtractorApi("Filemoon", "https://filemoon.sx", requiresReferer
                         this.name,
                         link,
                         url,
-                        -1,
-                        isM3u8 = true
+                        getQualityFromName(""),
+                        isM3u8 = link.contains(".m3u8")
                     )
                 )
             }

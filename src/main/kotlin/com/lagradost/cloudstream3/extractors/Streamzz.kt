@@ -17,15 +17,15 @@ class Streamzz : ExtractorApi("Streamzz", "https://streamzz.to", requiresReferer
         callback: (ExtractorLink) -> Unit
     ) {
         val id = url.substringAfterLast("/")
-        val response = app.get("https://streamzz.to/video-info/$id", referer = url).parsed<StreamzzResponse>()
-        response.video?.files?.forEach { (quality, file) ->
+        val response = app.get("https://streamzz.to/api/stream/info?id=$id", referer = url).parsed<StreamzzResponse>()
+        response.data?.files?.forEach { file ->
             callback(
                 newExtractorLink(
                     this.name,
                     this.name,
-                    file.url,
+                    file.src,
                     url,
-                    getQualityFromName(quality),
+                    getQualityFromName(file.label),
                 )
             )
         }
@@ -33,16 +33,17 @@ class Streamzz : ExtractorApi("Streamzz", "https://streamzz.to", requiresReferer
 
     @Serializable
     data class StreamzzResponse(
-        @JsonProperty("video") val video: Video? = null
+        @JsonProperty("data") val data: VideoData? = null
     )
 
     @Serializable
-    data class Video(
-        @JsonProperty("files") val files: Map<String, File>? = null
+    data class VideoData(
+        @JsonProperty("files") val files: List<VideoFile>? = null
     )
 
     @Serializable
-    data class File(
-        @JsonProperty("url") val url: String
+    data class VideoFile(
+        @JsonProperty("src") val src: String,
+        @JsonProperty("label") val label: String
     )
 }

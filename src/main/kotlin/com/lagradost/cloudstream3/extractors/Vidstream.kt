@@ -10,12 +10,12 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.CryptoAES
 import kotlinx.serialization.Serializable
 
-class MyCloud : ExtractorApi(
-    "MyCloud",
-    "https://mycloud.to",
+class Vidstream : ExtractorApi(
+    "Vidstream",
+    "https://vidstream.pro",
     requiresReferer = true
 ) {
-    private val key = "8755247491354486"
+    private val key = "31333637313838323931313831393738"
 
     override suspend fun getUrl(
         url: String,
@@ -23,13 +23,13 @@ class MyCloud : ExtractorApi(
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        val futoken = app.get("https://mycloud.to/futoken", referer = referer).text
+        val futoken = app.get("https://vidstream.pro/futoken", referer = referer).text
         val id = url.substringAfterLast("/")
         val encodedUrl = encodeId(id, key)
-        val realUrl = "https://mycloud.to/mediainfo/$encodedUrl?${futoken.replace("\"", "")}"
+        val realUrl = "https://vidstream.pro/mediainfo/$encodedUrl?${futoken.replace("\"", "")}"
         
         val response = app.get(realUrl, referer = url).parsed<MediaInfo>()
-        
+
         response.result?.sources?.firstOrNull()?.file?.let { fileUrl ->
             val result = app.get(fileUrl, referer = url).text
             val master = "#EXT-M3U8\\n#EXT-X-VERSION:3\\n".toRegex().replace(result, "")
