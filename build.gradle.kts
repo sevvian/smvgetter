@@ -1,6 +1,3 @@
-// Import the necessary class from the Shadow plugin to enable type-safe configuration.
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJarTask
-
 // Define versions in one place for maintainability.
 val ktor_version: String by project
 val logback_version: String by project
@@ -26,9 +23,9 @@ repositories {
     maven { url = uri("https://jitpack.io") }
 }
 
-// Configure the shadowJar task to create an executable "fat" JAR.
-// With the import, ShadowJarTask is now a resolved type.
-tasks.withType<ShadowJarTask> {
+// Configure the shadowJar task by its name and type. This is the robust, idiomatic
+// way to handle task configuration in the Gradle Kotlin DSL, avoiding classpath issues.
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJarTask>("shadowJar") {
     archiveBaseName.set("app")
     archiveClassifier.set("")
     archiveVersion.set("")
