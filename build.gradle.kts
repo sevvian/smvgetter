@@ -31,10 +31,8 @@ sourceSets {
         kotlin {
             srcDirs(
                 "src/main/kotlin", // Our own project's source code
-                "cloudstream/library/src/main/java",
-                "cloudstream/library/src/main/kotlin",
-                "cloudstream/repo/extractors/src/main/java",
-                "cloudstream/repo/extractors/src/main/kotlin"
+                "cloudstream/library/src/main",
+                "cloudstream/repo/extractors/src/main"
             )
         }
     }
