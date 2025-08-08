@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudstream Extractor API</title>
+    <style>
+        body { font-family: sans-serif; background-color: #121212; color: #e0e0e0; max-width: 800px; margin: 40px auto; padding: 20px; }
+        h1 { color: #bb86fc; }
+        input { width: 100%; padding: 10px; margin-bottom: 10px; background-color: #333; border: 1px solid #555; color: #e0e0e0; border-radius: 4px; }
+        button { padding: 10px 20px; background-color: #03dac6; border: none; color: #121212; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        #result { margin-top: 20px; background-color: #1e1e1e; padding: 15px; border-radius: 4px; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>Cloudstream Extractor API</h1>
+    <p>Enter a video page URL (e.g., from DoodStream, StreamWish) to extract the stream links.</p>
+    <input type="text" id="urlInput" placeholder="https://dood.watch/e/...">
+    <button id="extractBtn">Extract Links</button>
+    <pre id="result"></pre>
+
+    <script src="script.js"></script>
+</body>
+</html>
