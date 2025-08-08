@@ -1,13 +1,12 @@
 package com.extractor.api
 
 import android.util.Log
+import com.lagradost.cloudstream3.ExtractorLink
 import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.utils.ExtractorApi
-import com.lagradost.cloudstream3.utils.ExtractorLink
-// Manually import the extractors we want to support
 import com.lagradost.cloudstream3.extractors.DoodStream
 import com.lagradost.cloudstream3.extractors.StreamTape
 import com.lagradost.cloudstream3.extractors.Streamwish
+import com.lagradost.cloudstream3.utils.ExtractorApi
 
 object ExtractorLogic {
     private const val TAG = "ExtractorLogic"
