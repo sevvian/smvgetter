@@ -5,7 +5,8 @@ val kotlin_version = "1.9.23" // Match the version from the plugins block
 
 plugins {
     kotlin("jvm") version "1.9.23"
-    id("io.ktor.plugin") version "2.3.10"
+    // Updated Ktor plugin version to align with the new dependency version.
+    id("io.ktor.plugin") version "2.3.11"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
@@ -34,22 +35,21 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
 }
 
 dependencies {
-    // Ktor Framework (with corrected artifact names)
+    // Ktor Framework (using the updated version from gradle.properties)
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-status-pages-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
-    // Corrected: This artifact does not have the -jvm suffix.
     implementation("io.ktor:ktor-server-http-content:$ktor_version")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
     // Dependencies required by the Cloudstream extractor source code
-    // Corrected: Using the proper JitPack group ID 'com.github.Lagradost'.
-    implementation("com.github.Lagradost:nicehttp:1.1.5")
+    // Corrected: Using a newer, public version of nicehttp to resolve the 401 Unauthorized error.
+    implementation("com.github.Lagradost:nicehttp:1.1.7")
     implementation("org.jsoup:jsoup:1.17.2")
 
     // Reflection library used by ExtractorLogic to discover extractors at runtime.
