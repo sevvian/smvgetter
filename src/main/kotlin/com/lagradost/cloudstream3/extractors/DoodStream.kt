@@ -4,6 +4,7 @@ import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.getQualityFromName
+import com.lagradost.cloudstream3.utils.newExtractorLink
 
 class DoodStream : ExtractorApi("DoodStream", "https://dood.watch", requiresReferer = false) {
     override suspend fun getUrl(
@@ -21,10 +22,10 @@ class DoodStream : ExtractorApi("DoodStream", "https://dood.watch", requiresRefe
             (0..9).joinToString("") {
                 (('a'..'z') + ('A'..'Z') + ('0'..'9')).random().toString()
             }
-        }?token=${doodUrl.substringAfterLast("/")}"
+        }?token=${doodUrl?.substringAfterLast("/")}"
         val headers = mapOf("Referer" to "https://dood.watch/")
         callback(
-            ExtractorLink(
+            newExtractorLink(
                 this.name,
                 this.name,
                 realUrl,

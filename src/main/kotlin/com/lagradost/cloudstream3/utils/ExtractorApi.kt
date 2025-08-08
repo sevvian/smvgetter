@@ -16,18 +16,23 @@ fun getQualityFromName(qualityName: String?): Int {
     }
 }
 
+fun newExtractorLink(
+    source: String,
+    name: String,
+    url: String,
+    referer: String,
+    quality: Int,
+    isM3u8: Boolean = false,
+    headers: Map<String, String> = mapOf(),
+): ExtractorLink {
+    return ExtractorLink(source, name, url, referer, quality, isM3u8, headers)
+}
+
 abstract class ExtractorApi(
     var name: String,
     open var mainUrl: String,
     val requiresReferer: Boolean = false,
 ) {
-    /**
-     * Used to get the url and any other data from the page
-     * url is the link to the page which is to be extracted
-     * referer is the link to the page you are coming from, some sites require this
-     * subtitleCallback is a callback to add subtitles
-     * callback is a callback to add the link to the list of links
-     */
     abstract suspend fun getUrl(
         url: String,
         referer: String? = null,
