@@ -7,17 +7,17 @@ pluginManagement {
 }
 
 // Centralize dependency repository configuration for the entire project.
-// This resolves the build error and is a modern Gradle best practice.
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         mavenCentral()
-        // JitPack is required for some of Cloudstream's dependencies.
+        // JitPack is required for Cloudstream's dependencies (like nicehttp).
         maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "cloudstream-extractor-api"
 
-// Explicitly include the submodule in the build.
-include(":cloudstream:app")
+// We no longer include the submodule as a Gradle project.
+// Instead, we will include its source files directly in our main project's source set.
+// include(":cloudstream:app") // This line is intentionally removed.
