@@ -21,7 +21,6 @@ application {
 // Define the repositories where Gradle should look for dependencies.
 repositories {
     mavenCentral()
-    google() // For AndroidX libraries like core-ktx
     maven { url = uri("https://jitpack.io") }
 }
 
@@ -63,9 +62,6 @@ dependencies {
 
     // == CLOUDSTREAM LIBRARY DEPENDENCIES ==
     // These are the dependencies required by the Cloudstream source code itself.
-    
-    // Core Android KTX library (provides common extensions)
-    implementation("androidx.core:core-ktx:1.13.1")
 
     // HTTP Client used by Cloudstream
     implementation("com.github.Blatzar:NiceHttp:0.4.13")
