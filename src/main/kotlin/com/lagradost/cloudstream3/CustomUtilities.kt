@@ -23,3 +23,11 @@ fun String.base64Decode(): String {
         ""
     }
 }
+
+fun String.base64UrlDecode(): String {
+    return try {
+        String(Base64.getUrlDecoder().decode(this))
+    } catch (e: Exception) {
+        ""
+    }
+}

@@ -17,7 +17,13 @@ object ExtractorLogic {
         Streamwish(),
         MixDrop(),
         Filemoon(),
-        Voe()
+        Voe(),
+        Vidplay(),
+        MyCloud(),
+        StreamLare(),
+        Vidoza(),
+        Mp4upload(),
+        Streamzz()
         // More can be added here as they are ported.
     )
 
