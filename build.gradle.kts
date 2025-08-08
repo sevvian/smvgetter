@@ -18,8 +18,7 @@ application {
     mainClass.set("com.extractor.api.ApplicationKt")
 }
 
-// CORRECTED: Point to the 'library' module's source code, where the extractors reside.
-// The commonMain and jvmMain source sets contain all the necessary logic.
+// Point to the 'library' module's source code, where the extractors reside.
 sourceSets {
     main {
         kotlin.srcDirs(
@@ -41,7 +40,7 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
 }
 
 dependencies {
-    // Ktor Framework
+    // Ktor Framework (for our server)
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
@@ -52,23 +51,28 @@ dependencies {
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
-    // == CLOUDSTREAM LIBRARY DEPENDENCIES ==
-    // All versions and modules are now aligned with the provided cloudstream-master/gradle/libs.versions.toml
-    
-    // HTTP Client (Corrected based on your research and verified in the repo)
-    implementation("com.github.Blatzar:NiceHttp:0.4.13")
-
-    // HTML Parser
-    implementation("org.jsoup:jsoup:1.15.3")
-
-    // JSON Parser (This was missing)
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
-
-    // Coroutines Library (This was missing)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-
-    // Reflection library used by ExtractorLogic to discover extractors at runtime.
+    // Reflection library used by ExtractorLogic
     implementation("org.reflections:reflections:0.10.2")
+
+    // == CLOUDSTREAM LIBRARY DEPENDENCIES ==
+    // These are the dependencies required by the Cloudstream source code itself.
+    
+    // Core Android KTX library (provides common extensions)
+    implementation("androidx.core:core-ktx:1.13.1")
+
+    // HTTP Client used by Cloudstream
+    implementation("com.github.Blatzar:NiceHttp:0.4.13")
+    implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
+    implementation("io.ktor:ktor-client-okhttp:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation-jvm:$ktor_version")
+
+    // Data Parsers used by Cloudstream
+    implementation("org.jsoup:jsoup:1.15.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    // Coroutines Library
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
     // Testing Dependencies
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
