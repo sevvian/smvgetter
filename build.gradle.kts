@@ -50,6 +50,9 @@ dependencies {
     implementation("org.graalvm.js:js:23.1.2")
     implementation("org.graalvm.js:js-scriptengine:23.1.2")
 
+    // Reflection library for dynamic extractor discovery
+    implementation("org.reflections:reflections:0.10.2")
+
     // Testing
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
