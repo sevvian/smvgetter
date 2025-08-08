@@ -9,9 +9,8 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 object ExtractorLogic {
     private const val TAG = "ExtractorLogic"
 
-    // A comprehensive list of all viable, ported extractors.
+    // This is the complete and final list of all viable, ported extractors.
     private val extractors: List<ExtractorApi> = listOf(
-        // Standard hosts
         DoodStream(),
         Streamtape(),
         Streamwish(),
@@ -45,9 +44,17 @@ object ExtractorLogic {
         StreamSB(),
         Netu(),
         Sendvid(),
-        WcoStream()
-        // Clones and variants are often covered by the main extractors.
-        // Excluded: YouTube (requires external library), WebView-based extractors.
+        WcoStream(),
+        GogoCDN(),
+        VidSrcTo(),
+        Rabbitstream(),
+        Wolfstream(),
+        XStreamCdn(),
+        Asianload(),
+        Blogger(),
+        Sibnet()
+        // Clones, aliases, and variants are now included.
+        // Excluded: Extractors requiring WebView, complex logins, or heavy external libraries.
     )
 
     suspend fun extract(url: String): List<ExtractorLink> {
