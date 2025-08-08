@@ -9,7 +9,7 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
-class GogoCDN : ExtractorApi("GogoCDN", "https://gogocdn.net", requiresReferer = true) {
+open class GogoCDN : ExtractorApi("GogoCDN", "https://gogocdn.net", requiresReferer = true) {
     private val key = "37911490979715163134003223491201"
     private val iv = "5467413832793086"
     private val secondKey = "57413286913774904239134818786352"

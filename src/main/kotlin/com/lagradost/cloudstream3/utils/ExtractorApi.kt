@@ -29,7 +29,7 @@ fun newExtractorLink(
 }
 
 abstract class ExtractorApi(
-    var name: String,
+    open var name: String,
     open var mainUrl: String,
     val requiresReferer: Boolean = false,
 ) {
