@@ -1,35 +1,40 @@
-### 🕹 Tools and Programming languages used :
-<p align="left">
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=kotlin,androidstudio,gradle,github,githubactions&theme=light&perline=5" />
-  </a>
-</p>
+# Cloudstream Extractor API Service
 
-### Requirements
+This project is a Ktor-based web service that exposes the powerful extractor logic from the Cloudstream Android application as a standalone API.
 
-Cloud Stream ( To install : [View Docs](https://recloudstream.github.io/csdocs/) )
+It uses a Git submodule to pull in the Cloudstream source code and a custom Android shim layer to allow the extractor code to compile and run in a standard JVM/server environment.
 
-### To Install Repo
+## Features
 
-1) Direct Install : [Install](https://cutt.ly/qrQa38ja)
+-   **Dynamic Extractor Loading**: Discovers all available Cloudstream extractors at runtime using reflection.
+-   **Simple REST API**: A single `/extract` endpoint to get stream links from a supported URL.
+-   **Static Frontend**: A basic web interface for easy testing.
+-   **Dockerized**: Comes with a `Dockerfile` for easy containerization and deployment.
+-   **Automated CI/CD**: A GitHub Actions workflow automatically builds and pushes a Docker image to the GitHub Container Registry on every push to `main`.
 
-2) Short code : cncv
+## API Usage
 
-3) Manual Install (Copy and Paste in add Repo of Cloud Stream) :
+-   **Endpoint**: `GET /extract`
+-   **Query Parameter**: `url` (The URL of the video page you want to extract from)
+-   **Example**: `GET /extract?url=https://dood.watch/e/xxxxxxxxxx`
 
-        https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/refs/heads/builds/CNC.json
+### Success Response (`200 OK`)
 
-### License
-[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
+```json
+[
+  {
+    "name": "DoodStream",
+    "source": "DoodStream",
+    "quality": 1,
+    "url": "https://...",
+    "isM3u8": false,
+    "headers": {
+      "Referer": "https://dood.watch/"
+    }
+  }
+]
+```
 
-These extensions are Free: You can use, study, share and modify it at your will. They can be redistributed and/or modified under the terms of the
-[GNU General Public License](https://www.gnu.org/licenses/gpl.html) version 3 or later published by the Free Software Foundation.
+### Error Response (`404 Not Found`)
 
-
-### DMCA
-We hereby issue this notice to inform you that these extensions just function like an ordinary browser (like your browser) that fetch video files from internet,
-and do not violate the provisions of the Digital Millennium Copyright Act (DMCA). 
-The Content these extensions may access is not hosted by us or the Cloudstream 3 application but the websites they are browsing in their autonomous mode. It is sole responsibility 
-of the user and his/her countries' or states' law. If you think they are violating any intellectual property then please contact the actual file hosts not the owners of this repository or the CloudStream 3 app.
-
-Thank You.
+If no links can be found, the API will return a 404 status with a simple message.

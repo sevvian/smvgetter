@@ -1,1 +1,17 @@
-rootProject.name = "cloudstream-extractor-api"
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "CloudstreamExtractorAPI"
+include(":cloudstream:app")
