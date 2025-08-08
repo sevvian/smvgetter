@@ -28,10 +28,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
     // Cloudstream dependencies
-    // Depend on the local submodule project instead of fetching from the internet
-    implementation(project(":Cloudstream"))
-
-    // Other required libraries that Cloudstream itself uses
+    // Using the correct dependency found by the user in the official repo.
+    implementation("com.github.Blatzar:NiceHttp:0.4.13")
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 

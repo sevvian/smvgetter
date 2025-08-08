@@ -16,7 +16,3 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "smvgetter"
-
-// This is the crucial part: include the local submodule
-include(":Cloudstream")
-project(":Cloudstream").projectDir = file("Cloudstream")
