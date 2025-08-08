@@ -18,6 +18,13 @@ application {
     mainClass.set("com.extractor.api.ApplicationKt")
 }
 
+// Define the repositories where Gradle should look for dependencies.
+repositories {
+    mavenCentral()
+    google() // For AndroidX libraries like core-ktx
+    maven { url = uri("https://jitpack.io") }
+}
+
 // Point to the 'library' module's source code, where the extractors reside.
 sourceSets {
     main {
