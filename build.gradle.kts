@@ -17,11 +17,6 @@ application {
     mainClass.set("com.extractor.api.ApplicationKt")
 }
 
-repositories {
-    mavenCentral()
-    maven { url = uri("https://jitpack.io") }
-}
-
 dependencies {
     // Ktor
     implementation("io.ktor:ktor-server-core-jvm")
@@ -35,9 +30,9 @@ dependencies {
 
     // Cloudstream dependencies (as they are not on Maven Central)
     // These are needed for the extractor logic to compile.
-    implementation("com.github.recloudstream:nicehttp:2.0.3") // ✅ Confirmed
-    implementation("org.jsoup:jsoup:1.15.3") // ✅ Confirmed
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3") // ✅ Confirmed
+    implementation("com.github.recloudstream:nicehttp:2.0.3")
+    implementation("org.jsoup:jsoup:1.15.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 
     // Testing
     testImplementation("io.ktor:ktor-server-tests-jvm")
