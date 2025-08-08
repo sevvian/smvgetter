@@ -24,18 +24,16 @@ repositories {
     maven { url = uri("https://jitpack.io") }
 }
 
-// Point to the source code for the Cloudstream library AND the extractors.
+// Point to the correct source code directories for the Cloudstream library and extractors.
 sourceSets {
     main {
         kotlin.srcDirs(
-            "$projectDir/cloudstream/library/src/commonMain/kotlin",
-            "$projectDir/cloudstream/library/src/jvmMain/kotlin",
-            // Add the path to the extractors we want to include
+            "$projectDir/cloudstream/library/src/main/kotlin",
             "$projectDir/cloudstream/repo/extractors/src/main/kotlin"
         )
         java.srcDirs(
-            "$projectDir/cloudstream/library/src/commonMain/java",
-            "$projectDir/cloudstream/library/src/jvmMain/java"
+            // Many Kotlin files live in the 'java' source directory in the original project.
+            "$projectDir/cloudstream/library/src/main/java"
         )
     }
 }
