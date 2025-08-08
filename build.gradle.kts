@@ -24,12 +24,14 @@ repositories {
     maven { url = uri("https://jitpack.io") }
 }
 
-// Point to the 'library' module's source code, where the extractors reside.
+// Point to the source code for the Cloudstream library AND the extractors.
 sourceSets {
     main {
         kotlin.srcDirs(
             "$projectDir/cloudstream/library/src/commonMain/kotlin",
-            "$projectDir/cloudstream/library/src/jvmMain/kotlin"
+            "$projectDir/cloudstream/library/src/jvmMain/kotlin",
+            // Add the path to the extractors we want to include
+            "$projectDir/cloudstream/repo/extractors/src/main/kotlin"
         )
         java.srcDirs(
             "$projectDir/cloudstream/library/src/commonMain/java",
@@ -56,9 +58,6 @@ dependencies {
 
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")
-
-    // Reflection library used by ExtractorLogic
-    implementation("org.reflections:reflections:0.10.2")
 
     // == CLOUDSTREAM LIBRARY DEPENDENCIES ==
     // These are the dependencies required by the Cloudstream source code itself.
