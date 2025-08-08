@@ -18,8 +18,6 @@ application {
 }
 
 // Add a sourceSets block to include the Cloudstream submodule's source code.
-// This allows us to compile the extractor logic directly into our application,
-// bypassing the Android-specific build system of the submodule.
 sourceSets {
     main {
         java.srcDirs("$projectDir/cloudstream/app/src/main/java")
@@ -36,21 +34,23 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
 }
 
 dependencies {
-    // Ktor Framework (with corrected -jvm suffixes)
+    // Ktor Framework (with corrected artifact names)
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-status-pages-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-http-content-jvm:$ktor_version")
+    // Corrected: This artifact does not have the -jvm suffix.
+    implementation("io.ktor:ktor-server-http-content:$ktor_version")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
     // Dependencies required by the Cloudstream extractor source code
-    implementation("com.lagradost:nicehttp:1.1.5") // For networking
-    implementation("org.jsoup:jsoup:1.17.2")      // For HTML parsing
+    // Corrected: Using the proper JitPack group ID 'com.github.Lagradost'.
+    implementation("com.github.Lagradost:nicehttp:1.1.5")
+    implementation("org.jsoup:jsoup:1.17.2")
 
     // Reflection library used by ExtractorLogic to discover extractors at runtime.
     implementation("org.reflections:reflections:0.10.2")
