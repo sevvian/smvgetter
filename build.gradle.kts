@@ -35,9 +35,9 @@ dependencies {
 
     // Cloudstream dependencies (as they are not on Maven Central)
     // These are needed for the extractor logic to compile.
-    implementation("com.github.recloudstream:nicehttp:2.0.3") // Corrected to the recloudstream fork
-    implementation("org.jsoup:jsoup:1.15.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+    implementation("com.github.recloudstream:nicehttp:2.0.3") // ✅ Confirmed
+    implementation("org.jsoup:jsoup:1.15.3") // ✅ Confirmed
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3") // ✅ Confirmed
 
     // Testing
     testImplementation("io.ktor:ktor-server-tests-jvm")
