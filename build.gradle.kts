@@ -21,21 +21,7 @@ application {
 // Define the repositories where Gradle should look for dependencies.
 repositories {
     mavenCentral()
-    maven { url = uri("https://jitpack.io") }
-}
-
-// Configure the Kotlin source sets to include all necessary directories from the submodule.
-// This is a more direct approach to ensure the compiler finds all required classes.
-sourceSets {
-    main {
-        kotlin {
-            srcDirs(
-                "src/main/kotlin", // Our own project's source code
-                "cloudstream/library/src/main",
-                "cloudstream/repo/extractors/src/main"
-            )
-        }
-    }
+    maven { url = uri("https://jitpack.io") } // Jitpack is needed for Cloudstream
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
@@ -57,22 +43,13 @@ dependencies {
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
-    // == CLOUDSTREAM LIBRARY DEPENDENCIES ==
-    // These are the dependencies required by the Cloudstream source code itself.
-
-    // HTTP Client used by Cloudstream
-    implementation("com.github.Blatzar:NiceHttp:0.4.13")
-    implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-okhttp:$ktor_version")
-    implementation("io.ktor:ktor-client-content-negotiation-jvm:$ktor_version")
-
-    // Data Parsers used by Cloudstream
-    implementation("org.jsoup:jsoup:1.15.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-
-    // Coroutines Library
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    // == CLOUDSTREAM DEPENDENCIES ==
+    // We now pull the Cloudstream library and extractors as pre-compiled
+    // artifacts from Jitpack. This is much more stable than compiling from source.
+    // Using a specific commit hash for reproducibility.
+    val cloudstreamCommit = "d9131e29692a1809312a93433329a334a24765a4" 
+    implementation("com.github.recloudstream.cloudstream:library:$cloudstreamCommit")
+    implementation("com.github.recloudstream.cloudstream:repo:$cloudstreamCommit")
 
     // Testing Dependencies
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
