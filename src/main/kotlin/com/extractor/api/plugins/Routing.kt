@@ -14,8 +14,8 @@ fun Application.configureRouting() {
 
     install(StatusPages) {
         exception<Throwable> { call, cause ->
-            // Fixed: Use 'application.log' to access the logger from this context
-            application.log.error("An unhandled exception occurred", cause)
+            // Fixed: Use 'call.application.log' to access the logger from this context
+            call.application.log.error("An unhandled exception occurred", cause)
             call.respondText(text = "500: ${cause.message}" , status = HttpStatusCode.InternalServerError)
         }
     }
