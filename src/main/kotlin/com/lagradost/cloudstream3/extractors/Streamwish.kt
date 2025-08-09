@@ -6,6 +6,8 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
 
 class Streamwish : ExtractorApi("Streamwish", "https://streamwish.top", requiresReferer = false) {
+    override val altUrls = listOf("streamwish.to", "streamwish.com", "streamwish.cc", "streamwish.xyz")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

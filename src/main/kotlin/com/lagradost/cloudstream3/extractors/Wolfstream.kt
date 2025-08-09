@@ -8,6 +8,8 @@ import com.lagradost.cloudstream3.utils.JsUnpacker
 import com.lagradost.cloudstream3.utils.newExtractorLink
 
 class Wolfstream : ExtractorApi("Wolfstream", "https://wolfstream.tv", requiresReferer = true) {
+    override val altUrls = listOf("wolfstream.best")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

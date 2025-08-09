@@ -6,6 +6,8 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
 
 class Vudeo : ExtractorApi("Vudeo", "https://vudeo.io", requiresReferer = true) {
+    override val altUrls = listOf("vudeo.co", "vudeo.net")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

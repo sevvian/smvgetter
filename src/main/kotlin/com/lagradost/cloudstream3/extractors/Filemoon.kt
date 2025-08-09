@@ -8,6 +8,8 @@ import com.lagradost.cloudstream3.utils.JsUnpacker
 import com.lagradost.cloudstream3.utils.newExtractorLink
 
 class Filemoon : ExtractorApi("Filemoon", "https://filemoon.sx", requiresReferer = true) {
+    override val altUrls = listOf("filemoon.to", "filemoon.ws", "filemoon.in", "filemoon.so")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

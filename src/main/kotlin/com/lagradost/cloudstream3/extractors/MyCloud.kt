@@ -9,12 +9,14 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.CryptoAES
 import kotlinx.serialization.Serializable
+import java.net.URI
 
 class MyCloud : ExtractorApi(
     "MyCloud",
     "https://mycloud.to",
     requiresReferer = true
 ) {
+    override val altUrls = listOf("mcloud.to")
     private val key = "8755247491354486"
 
     override suspend fun getUrl(
@@ -23,10 +25,11 @@ class MyCloud : ExtractorApi(
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        val futoken = app.get("https://mycloud.to/futoken", referer = referer).text
+        val domain = URI(url).host
+        val futoken = app.get("https://$domain/futoken", referer = referer).text
         val id = url.substringAfterLast("/")
         val encodedUrl = encodeId(id, key)
-        val realUrl = "https://mycloud.to/mediainfo/$encodedUrl?${futoken.replace("\"", "")}"
+        val realUrl = "https://$domain/mediainfo/$encodedUrl?${futoken.replace("\"", "")}"
         
         val response = app.get(realUrl, referer = url).parsed<MediaInfo>()
         

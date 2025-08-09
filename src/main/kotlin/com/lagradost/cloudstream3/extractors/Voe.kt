@@ -8,6 +8,8 @@ import com.lagradost.cloudstream3.utils.getQualityFromName
 import com.lagradost.cloudstream3.utils.newExtractorLink
 
 class Voe : ExtractorApi("Voe", "https://voe.sx", requiresReferer = true) {
+    override val altUrls = listOf("voe.ninja")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

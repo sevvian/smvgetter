@@ -9,12 +9,14 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.CryptoAES
 import kotlinx.serialization.Serializable
+import java.net.URI
 
 class Vidplay : ExtractorApi(
     "Vidplay",
     "https://vidplay.online",
     requiresReferer = true
 ) {
+    override val altUrls = listOf("vidplay.site", "vidplay.lol", "vidplay.one")
     private val key = "9201745688345162"
 
     override suspend fun getUrl(
@@ -23,10 +25,11 @@ class Vidplay : ExtractorApi(
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        val futoken = app.get("https://vidplay.online/futoken", referer = referer).text
+        val domain = URI(url).host
+        val futoken = app.get("https://$domain/futoken", referer = referer).text
         val id = url.substringAfterLast("/")
         val encodedUrl = encodeId(id, key)
-        val realUrl = "https://vidplay.online/mediainfo/$encodedUrl?${futoken.replace("\"", "")}"
+        val realUrl = "https://$domain/mediainfo/$encodedUrl?${futoken.replace("\"", "")}"
         
         val response = app.get(realUrl, referer = url).parsed<MediaInfo>()
 

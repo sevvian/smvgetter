@@ -6,6 +6,8 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
 
 class Streamhub : ExtractorApi("Streamhub", "https://streamhub.to", requiresReferer = true) {
+    override val altUrls = listOf("streamhub.ink", "streamhub.cx")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

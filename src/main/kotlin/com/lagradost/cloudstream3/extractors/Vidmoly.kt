@@ -6,6 +6,8 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
 
 class Vidmoly : ExtractorApi("Vidmoly", "https://vidmoly.to", requiresReferer = true) {
+    override val altUrls = listOf("vidmoly.me", "vidmoly.net")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

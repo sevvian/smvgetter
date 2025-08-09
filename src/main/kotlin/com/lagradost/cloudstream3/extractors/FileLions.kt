@@ -6,6 +6,8 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
 
 class FileLions : ExtractorApi("FileLions", "https://filelions.to", requiresReferer = true) {
+    override val altUrls = listOf("filelions.live", "filelions.online")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

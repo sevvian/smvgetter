@@ -8,6 +8,8 @@ import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.newExtractorLink
 
 class StreamSB : ExtractorApi("StreamSB", "https://streamsb.net", requiresReferer = true) {
+    override val altUrls = listOf("sbembed.com", "sbembed1.com", "sbplay.org", "sbvideo.net", "sbfull.com", "sbbrisk.com", "sbspeed.com", "watchsb.com")
+
     override suspend fun getUrl(
         url: String,
         referer: String?,

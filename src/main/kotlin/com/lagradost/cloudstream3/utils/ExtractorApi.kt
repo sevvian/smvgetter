@@ -33,6 +33,9 @@ abstract class ExtractorApi(
     open var mainUrl: String,
     val requiresReferer: Boolean = false,
 ) {
+    // This new property will hold a list of alternative domains for an extractor.
+    open val altUrls: List<String> = emptyList()
+
     abstract suspend fun getUrl(
         url: String,
         referer: String? = null,

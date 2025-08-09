@@ -64,8 +64,10 @@ object ExtractorLogic {
         val subtitles = mutableListOf<SubtitleFile>()
 
         // Find the first extractor that matches the input URL from our list.
-        val extractor = extractors.find { url.contains(it.mainUrl, ignoreCase = true) }
-            ?: throw Exception("No suitable extractor found for URL: $url")
+        val extractor = extractors.find {
+            val allUrls = listOf(it.mainUrl) + it.altUrls
+            allUrls.any { domain -> url.contains(domain, ignoreCase = true) }
+        } ?: throw Exception("No suitable extractor found for URL: $url")
 
         Log.d(TAG, "Using extractor: ${extractor.name} for URL: $url")
 
