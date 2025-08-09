@@ -16,9 +16,9 @@ val httpClient = OkHttpClient.Builder()
     .writeTimeout(30, TimeUnit.SECONDS)
     .build()
 
-// Pass the custom client to the Requests object
+// Pass the custom client as the first, positional argument to the Requests constructor.
 val app = Requests(
-    client = httpClient,
+    httpClient,
     defaultHeaders = mapOf(
         "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0"
     )
